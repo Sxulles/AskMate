@@ -2,8 +2,8 @@
 
 public class Question
 {
-    public int id { get; set; }
-    public string title { get; set; }
-    public string description { get; set; }
-    public DateTime submission_time { get; set; }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime SubmissionTime { get; set; }
 }
