@@ -1,6 +1,9 @@
 ﻿namespace AskMate.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
-public class UserController
+[ApiController]
+[Route("[controller]")]
+public class UserController : ControllerBase
 {
     
 }
