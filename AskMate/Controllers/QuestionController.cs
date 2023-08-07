@@ -1,4 +1,6 @@
+using AskMate.Model;
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 
 namespace AskMate.Controllers;
 
@@ -9,6 +11,8 @@ public class QuestionController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        return Ok("No questions were asked yet.");
+        var repository = new QuestionRepository(new NpgsqlConnection(ConnectionData.connectionString));
+
+        return Ok(repository.GetAll());
     }
 }
