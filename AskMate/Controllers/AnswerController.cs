@@ -1,6 +1,10 @@
-﻿namespace AskMate.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class AnswerController
+namespace AskMate.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class AnswerController : ControllerBase
 {
     
 }

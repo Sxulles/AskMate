@@ -6,5 +6,5 @@ public class User
     public string Username { get; }
     public string Email { get; }
     public string Password { get; }
-    public DateTime Registration_time { get; }
+    public DateTime RegistrationTime { get; }
 }
