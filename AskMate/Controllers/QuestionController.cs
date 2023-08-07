@@ -14,4 +14,11 @@ public class QuestionController : ControllerBase
         var repository = new QuestionRepository(new NpgsqlConnection(ConnectionData.connectionString));
         return Ok(repository.GetAll("DESC", "submission_time"));
     }
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var repository = new QuestionRepository(new NpgsqlConnection(ConnectionData.connectionString));
+        
+        return Ok(repository.GetById(id));
+    }
 }
