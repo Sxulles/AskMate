@@ -12,7 +12,6 @@ public class QuestionController : ControllerBase
     public IActionResult GetAll()
     {
         var repository = new QuestionRepository(new NpgsqlConnection(ConnectionData.connectionString));
-
-        return Ok(repository.GetAll());
+        return Ok(repository.GetAll("DESC", "submission_time"));
     }
 }
