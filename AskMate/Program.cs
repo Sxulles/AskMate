@@ -1,4 +1,7 @@
 using AskMate.Middleware;
+using dotenv.net;
+
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
