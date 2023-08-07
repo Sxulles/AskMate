@@ -12,7 +12,7 @@ public class QuestionRepository
         _connection = connection;
     }
     
-    public IEnumerable<Question> GetAll()
+    public IEnumerable<Question> GetAll(string order, string column)
     {
         _connection.Open();
         var adapter = new NpgsqlDataAdapter("SELECT * FROM questions", _connection);
@@ -20,6 +20,8 @@ public class QuestionRepository
         var dataSet = new DataSet();
         adapter.Fill(dataSet);
         var table = dataSet.Tables[0];
+        
+        table.DefaultView.Sort = $"{column} {order}"; // Sort by Submission Time
 
         foreach (DataRow row in table.Rows)
         {
