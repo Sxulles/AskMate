@@ -97,5 +97,17 @@ public class QuestionRepository
 
         return lastInsertId;
     }
-    
+    //DELETE A QUESTION
+    public void Delete(int id)
+    {
+        _connection.Open();
+        var adapter = new NpgsqlDataAdapter(
+            "DELETE FROM questions WHERE id = :id",
+            _connection
+        );
+        adapter.SelectCommand?.Parameters.AddWithValue(":id", id);
+
+        adapter.SelectCommand?.ExecuteNonQuery();
+        _connection.Close();
+    }
 }
