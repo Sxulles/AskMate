@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using System.Data;
+using Npgsql;
 
 namespace AskMate.Model.Repositories;
 
@@ -28,5 +29,24 @@ public class UserRepository
         _connection.Close();
 
         return lastInsertId;
+    }
+
+    public string AuthUser(string username, string password)
+    {
+        _connection.Open();
+        
+        using (var command = new NpgsqlCommand("SELECT COUNT(*) FROM users WHERE username = :username AND password = :password",_connection))
+        {
+            command.Parameters.AddWithValue(":username", username);
+            command.Parameters.AddWithValue(":password", password);
+            
+            int userCount = Convert.ToInt32(command.ExecuteScalar());
+            
+            if (userCount > 0)
+            {
+                return "Successfully logged in!";
+            }
+        }
+        return "Invalid user!";
     }
 }
