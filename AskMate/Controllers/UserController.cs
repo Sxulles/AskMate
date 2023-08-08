@@ -25,4 +25,12 @@ public class UserController : ControllerBase
 
         return Ok(repository.AuthUser(username, password));
     }
+    
+    [HttpPost("/User/logout/{username}")]
+    public IActionResult LogUser(string username)
+    {
+        var repository = new UserRepository(new NpgsqlConnection(ConnectionData.connectionString));
+
+        return Ok(repository.LogoutUser(username));
+    }
 }
