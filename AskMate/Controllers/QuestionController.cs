@@ -26,12 +26,12 @@ public class QuestionController : ControllerBase
     }
     
     // Insert a new Question into database
-    [HttpPost()]
-    public IActionResult CreateQuestion(Question question)
+    [HttpPost("{question}, {description}")]
+    public IActionResult CreateQuestion(string question, string description)
     {
         var repository = new QuestionRepository(new NpgsqlConnection(ConnectionData.connectionString));
 
-        return Ok(repository.CreateQuestion(question));
+        return Ok(repository.CreateQuestion(question, description));
     }
     [HttpDelete("{id}")]
     
