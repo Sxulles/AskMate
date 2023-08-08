@@ -10,12 +10,12 @@ namespace AskMate.Controllers;
 public class AnswerController : ControllerBase
 {
     // Create an answer for a specific question by id
-    [HttpPost]
-    public IActionResult CreateAnswer(Answer answer)
+    [HttpPost("{message},{questionId}")]
+    public IActionResult CreateAnswer(string message, int questionId)
     {
         var repository = new AnswerRepository(new NpgsqlConnection(ConnectionData.connectionString));
 
-        return Ok(repository.CreateAnswer(answer));
+        return Ok(repository.CreateAnswer(message, questionId));
     }
     
     [HttpDelete("{id}")]
