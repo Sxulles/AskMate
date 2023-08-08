@@ -12,11 +12,11 @@ public class AnswerRepository
         _connection = connection;
     }
 
-    public int? CreateAnswer(Answer answer)
+    public int? CreateAnswer(string message, int questionId)
     {
         _connection.Open();
         var query = new NpgsqlDataAdapter("SELECT * FROM questions WHERE id = :question_id", _connection);
-        query.SelectCommand?.Parameters.AddWithValue(":question_id", answer.QuestionId);
+        query.SelectCommand?.Parameters.AddWithValue(":question_id", questionId);
         DataTable queryResult = new DataTable();
     
         
@@ -30,8 +30,8 @@ public class AnswerRepository
                 "INSERT INTO answers (message, question_id, submission_time) VALUES (:message, :question_id, :submission_time) RETURNING id",
                 _connection
             );
-            adapter.SelectCommand?.Parameters.AddWithValue(":message", answer.Message);
-            adapter.SelectCommand?.Parameters.AddWithValue(":question_id", answer.QuestionId);
+            adapter.SelectCommand?.Parameters.AddWithValue(":message", message);
+            adapter.SelectCommand?.Parameters.AddWithValue(":question_id", questionId);
             adapter.SelectCommand?.Parameters.AddWithValue(":submission_time", DateTime.Now);
 
             lastInsertId = (int)adapter.SelectCommand?.ExecuteScalar();
