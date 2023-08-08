@@ -12,6 +12,7 @@ public class QuestionRepository
         _connection = connection;
     }
     
+    // Get all questions
     public IEnumerable<Question> GetAll(string order, string column)
     {
         _connection.Open();
@@ -37,6 +38,7 @@ public class QuestionRepository
         _connection.Close();
     }
 
+    // Get a question and the answers
     public QuestionAnswersPair? GetById(int id)
     {
         _connection.Open();
@@ -76,6 +78,24 @@ public class QuestionRepository
             };
         }
         return null;
+    }
+    
+    // Create a new Question
+    public int CreateQuestion(Question question)
+    {
+        _connection.Open();
+        var adapter = new NpgsqlDataAdapter(
+            "INSERT INTO questions (title, description, submission_time) VALUES (:title, :description, :submission_time) RETURNING id",
+            _connection
+        );
+        adapter.SelectCommand?.Parameters.AddWithValue(":title", question.Title);
+        adapter.SelectCommand?.Parameters.AddWithValue(":description", question.Description);
+        adapter.SelectCommand?.Parameters.AddWithValue(":submission_time", DateTime.Now);
+
+        var lastInsertId = (int)adapter.SelectCommand?.ExecuteScalar();
+        _connection.Close();
+
+        return lastInsertId;
     }
     
 }
