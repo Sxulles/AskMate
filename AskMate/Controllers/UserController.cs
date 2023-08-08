@@ -17,4 +17,12 @@ public class UserController : ControllerBase
 
         return Ok(repository.CreateUser(user));
     }
+
+    [HttpPost("{username}, {password}")]
+    public IActionResult LogUser(string username, string password)
+    {
+        var repository = new UserRepository(new NpgsqlConnection(ConnectionData.connectionString));
+
+        return Ok(repository.AuthUser(username, password));
+    }
 }
