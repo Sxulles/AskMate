@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Microsoft.AspNetCore.Components.Web;
 using Npgsql;
 
 namespace AskMate.Model.Repositories;
@@ -50,6 +51,31 @@ public class AnswerRepository
         adapter.SelectCommand?.Parameters.AddWithValue(":id", id);
 
         adapter.SelectCommand?.ExecuteNonQuery();
+        _connection.Close();
+    }
+    
+    //Accept answer
+    public void AcceptAnswer(int id)
+    {
+        _connection.Open();
+        var adapter = new NpgsqlDataAdapter(
+            "SELECT question_id FROM answers WHERE id = :id",
+            _connection
+        );
+        adapter.SelectCommand?.Parameters.AddWithValue(":id", id);
+        
+        var dataTable = new DataTable();
+        adapter.Fill(dataTable);
+        int questionId = 0;
+
+        foreach (DataRow row in dataTable.Rows)
+        {
+            questionId = (int)row["question_id"];
+        }
+        
+        var query = new NpgsqlDataAdapter($"UPDATE questions SET accepted_answer_id = {id} WHERE id = {questionId}", _connection);
+        query.SelectCommand?.ExecuteNonQuery();
+        
         _connection.Close();
     }
 }
