@@ -26,4 +26,13 @@ public class AnswerController : ControllerBase
 
         return Ok();
     }
+    
+    [HttpPatch("/Answer/Accept/{id}")]
+    public IActionResult AcceptAnswer(int id)
+    {
+        var repository = new AnswerRepository(new NpgsqlConnection(ConnectionData.connectionString));
+        repository.AcceptAnswer(id);
+
+        return Ok();
+    }
 }
