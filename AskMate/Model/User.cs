@@ -2,9 +2,9 @@
 
 public class User
 {
-    public int Id { get; }
-    public string Username { get; }
-    public string Email { get; }
-    public string Password { get; }
-    public DateTime RegistrationTime { get; }
+    public int Id { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public DateTime RegistrationTime { get; set; }
 }
