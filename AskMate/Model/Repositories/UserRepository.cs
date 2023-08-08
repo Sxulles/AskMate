@@ -49,4 +49,23 @@ public class UserRepository
         }
         return "Invalid user!";
     }
+    
+    public string LogoutUser(string username)
+    {
+        _connection.Open();
+        
+        using (var command = new NpgsqlCommand("SELECT COUNT(*) FROM users WHERE username = :username",_connection))
+        {
+            command.Parameters.AddWithValue(":username", username);
+
+            int userCount = Convert.ToInt32(command.ExecuteScalar());
+            
+            if (userCount > 0)
+            {
+                return "Successfully logged out!";
+            }
+        }
+        return "Invalid user!";
+    }
+    
 }
