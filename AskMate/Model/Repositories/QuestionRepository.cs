@@ -81,15 +81,15 @@ public class QuestionRepository
     }
     
     // Create a new Question
-    public int CreateQuestion(Question question)
+    public int CreateQuestion(string question, string description)
     {
         _connection.Open();
         var adapter = new NpgsqlDataAdapter(
             "INSERT INTO questions (title, description, submission_time) VALUES (:title, :description, :submission_time) RETURNING id",
             _connection
         );
-        adapter.SelectCommand?.Parameters.AddWithValue(":title", question.Title);
-        adapter.SelectCommand?.Parameters.AddWithValue(":description", question.Description);
+        adapter.SelectCommand?.Parameters.AddWithValue(":title", question);
+        adapter.SelectCommand?.Parameters.AddWithValue(":description", description);
         adapter.SelectCommand?.Parameters.AddWithValue(":submission_time", DateTime.Now);
 
         var lastInsertId = (int)adapter.SelectCommand?.ExecuteScalar();
